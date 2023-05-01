@@ -27,7 +27,7 @@ export const List = ({ list, users }: listprops) => {
       </thead>
       <tbody>
         {list.map((project) => (
-          <tr key={project.id}>
+          <tr key={project.personId}>
             <td>{project.name}</td>
             <td>
               {users.find((user) => user.id === project.personId)?.name ||

@@ -2,16 +2,13 @@ import { SearchPannel } from "./search-panel";
 import { List } from "./list";
 import { useEffect, useState } from "react";
 import { cleanObject, useDebounce, useMount } from "utils";
-import * as qs from "qs";
 import { useHttp } from "utils/http";
-
-const apiURL = process.env.REACT_APP_API_URL;
 
 export const ProjectListScreen = () => {
   const [users, setusers] = useState([]);
   const [param, setParam] = useState({
     name: "",
-    id: "",
+    personId: "",
   });
   const debonced = useDebounce(param, 2000);
   const [list, setList] = useState([]);
