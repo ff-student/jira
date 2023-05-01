@@ -1,24 +1,9 @@
 import { FormEvent } from "react";
 
-const apiURL = process.env.REACT_APP_API_URL;
+import { useAuth } from "context/auth-context";
 
 export const LoginScreen = () => {
-  const Login = (param: { username: string; password: string }) => {
-    fetch(`${apiURL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(param),
-    }).then(async (response) => {
-      if (response.ok) {
-        console.log(response);
-      } else {
-        console.log(response);
-      }
-    });
-  };
-
+  const { login, user } = useAuth();
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     //阻止表单默认行为
     event.preventDefault();
@@ -27,7 +12,7 @@ export const LoginScreen = () => {
       .value;
     const password = (event.currentTarget.elements[1] as HTMLInputElement)
       .value;
-    Login({ username, password });
+    login({ username, password });
   };
   return (
     <form onSubmit={handleSubmit}>
