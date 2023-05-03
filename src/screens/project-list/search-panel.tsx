@@ -1,4 +1,4 @@
-import { Select } from "antd";
+import { Form, Select } from "antd";
 
 export interface User {
   id: string;
@@ -20,9 +20,10 @@ interface SearchPannelProps {
 
 export const SearchPannel = ({ param, setParam, users }: SearchPannelProps) => {
   return (
-    <form>
-      <div>
+    <Form style={{ marginBottom: "2rem" }} layout={"inline"}>
+      <Form.Item>
         <input
+          placeholder={"项目名"}
           type="text"
           value={param.name}
           onChange={(event) =>
@@ -32,6 +33,8 @@ export const SearchPannel = ({ param, setParam, users }: SearchPannelProps) => {
             })
           }
         />
+      </Form.Item>
+      <Form.Item>
         <Select
           value={param.personId}
           onChange={(value) =>
@@ -48,7 +51,7 @@ export const SearchPannel = ({ param, setParam, users }: SearchPannelProps) => {
             </Select.Option>
           ))}
         </Select>
-      </div>
-    </form>
+      </Form.Item>
+    </Form>
   );
 };
