@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { RegisterScreen } from "./register";
 import { LoginScreen } from "./login";
-import { Button, Card, Divider } from "antd";
+import { Button, Card, Divider, Typography } from "antd";
 import styled from "@emotion/styled";
 import logo from "assets/logo.svg";
 import left from "assets/left.svg";
@@ -9,6 +9,7 @@ import right from "assets/right.svg";
 
 export const UnauthenticatedApp = () => {
   const [isgister, setisgister] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
   return (
     <Container>
@@ -16,7 +17,12 @@ export const UnauthenticatedApp = () => {
       <Background />
       <ShadowCard>
         <Title>{isgister ? "请注册" : "请登录"}</Title>
-        {isgister ? <RegisterScreen /> : <LoginScreen />}
+        {error ? <Typography.Text>{error.message}</Typography.Text> : null}
+        {isgister ? (
+          <RegisterScreen onError={setError} />
+        ) : (
+          <LoginScreen onError={setError} />
+        )}
         <Divider />
         <a onClick={() => setisgister(!isgister)}>
           {isgister ? "还没有账户，去注册" : "已有账户，去登录"}
