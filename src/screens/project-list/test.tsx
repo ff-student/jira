@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 export function SearchResults() {
   let list = [1, 2, 3, 4];
   list.reduce((pre, data) => {
-    console.log({ data: 1, [data]: 0 });
     return 1;
   }, 0);
 

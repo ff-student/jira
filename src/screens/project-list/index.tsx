@@ -13,7 +13,7 @@ export const ProjectListScreen = () => {
   useDocumentTitle("项目列表", false);
   const [setParam, param] = useProjectsSearchParams();
   const debonced = useDebounce(param, 200);
-  const { isLoading, error, data: list } = useProjects(debonced);
+  const { isLoading, error, data: list, retry } = useProjects(debonced);
   const { data: users } = useUsers();
 
   return (
@@ -23,6 +23,7 @@ export const ProjectListScreen = () => {
       <SearchPannel param={param} setParam={setParam} users={users || []} />
       {error ? <Typography.Text>error.message</Typography.Text> : null}
       <List
+        refersh={retry}
         dataSource={list || []}
         users={users || []}
         loading={isLoading}
