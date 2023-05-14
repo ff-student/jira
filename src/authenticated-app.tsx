@@ -26,6 +26,7 @@ export const AuthenticatedApp = () => {
 };
 
 const PageHeader = () => {
+  const a = ["12", 12] as const;
   const { logout, user } = useAuth();
   return (
     <Header between={true}>
