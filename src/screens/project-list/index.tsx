@@ -6,15 +6,16 @@ import { Typography } from "antd";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/user";
 import { useUrlQueryParam } from "utils/url";
+import { useProjectsSearchParams } from "./util";
 // import { SearchResults } from "./test";
 
 export const ProjectListScreen = () => {
-  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
-  console.log(param);
+  useDocumentTitle("项目列表", false);
+  const [setParam, param] = useProjectsSearchParams();
   const debonced = useDebounce(param, 200);
   const { isLoading, error, data: list } = useProjects(debonced);
   const { data: users } = useUsers();
-  useDocumentTitle("项目列表", false);
+
   return (
     <Container>
       {/* <SearchResults></SearchResults> */}
