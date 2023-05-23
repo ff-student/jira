@@ -1,8 +1,9 @@
-import { ListProps, Table, TableProps } from "antd";
+import { Dropdown, ListProps, Menu, Table, TableProps } from "antd";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { Pin } from "components/pin";
 import { useEditProject } from "utils/project";
+import { ButtonNopadding } from "components/lib";
 export interface Project {
   id: number;
   name: string;
@@ -21,6 +22,7 @@ interface User {
 interface listprops extends TableProps<Project> {
   users: User[];
   refersh?: () => void;
+  setProjectModalOpen: (isopen: boolean) => void;
 }
 
 export const List = ({ users, ...props }: listprops) => {
@@ -76,6 +78,28 @@ export const List = ({ users, ...props }: listprops) => {
                   ? dayjs(project.created).format("YYYY-MM-DD")
                   : "无"}
               </span>
+            );
+          },
+        },
+        {
+          render(value, project) {
+            return (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key={"edit"}>
+                      <ButtonNopadding
+                        type={"link"}
+                        onClick={() => props.setProjectModalOpen(true)}
+                      >
+                        编辑
+                      </ButtonNopadding>
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
+                <ButtonNopadding type={"link"}>...</ButtonNopadding>
+              </Dropdown>
             );
           },
         },
