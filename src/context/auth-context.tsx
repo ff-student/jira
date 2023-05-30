@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useState } from "react";
+import { Dispatch, ReactNode, useCallback, useState } from "react";
 import * as auth from "auth_provider";
 import { User } from "screens/project-list/search-panel";
 import { http } from "utils/http";
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     run,
     setData: setUser,
   } = useAsync<User | null>();
-  // const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch();
+  // @ts-ignore
   const dispatch: (...args: unknown[]) => Promise<User> = useDispatch();
   useMount(() => {
     run(dispatch(bootstrap()));
@@ -52,11 +52,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const useAuth = () => {
-  // const dispatch: ThunkDispatch<RootState, undefined, any> = useDispatch();
+  // @ts-ignore
   const dispatch: (...args: unknown[]) => Promise<User> = useDispatch();
-  // const dispatch: Dispatch<AnyAction> = useDispatch()
   const user = useSelector(selectUser);
-  // const login = (form: AuthForm) => auth.login(form).then(setUser);
   const login = useCallback(
     (form: AuthForm) => dispatch(authStore.login(form)),
     [dispatch]
