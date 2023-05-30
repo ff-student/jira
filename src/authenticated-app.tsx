@@ -8,23 +8,15 @@ import { Route, Routes } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ProjectScreen } from "screens/project";
 import { resetURL } from "utils";
-import { useState } from "react";
 import { ProjectModal } from "screens/project-list/project-model";
 import { ProjectPopover } from "components/project-popover";
+import { useDispatch } from "react-redux";
+import { projectListActions } from "screens/project-list/project-list,slice";
 export const AuthenticatedApp = () => {
-  const [projectModalOpen, setProjectModalOpen] = useState(false);
+  const dispatch = useDispatch();
   return (
     <Container>
-      <PageHeader
-        projectButton={
-          <ButtonNopadding
-            type={"link"}
-            onClick={() => setProjectModalOpen(true)}
-          >
-            创建项目
-          </ButtonNopadding>
-        }
-      />
+      <PageHeader />
       <Main>
         <Router>
           <Routes>
@@ -35,7 +27,9 @@ export const AuthenticatedApp = () => {
                   projectButton={
                     <ButtonNopadding
                       type={"link"}
-                      onClick={() => setProjectModalOpen(true)}
+                      onClick={() =>
+                        dispatch(projectListActions.openProjectModalOpen())
+                      }
                     >
                       创建项目
                     </ButtonNopadding>
@@ -51,7 +45,9 @@ export const AuthenticatedApp = () => {
                   projectButton={
                     <ButtonNopadding
                       type={"link"}
-                      onClick={() => setProjectModalOpen(true)}
+                      onClick={() =>
+                        dispatch(projectListActions.openProjectModalOpen())
+                      }
                     >
                       创建项目
                     </ButtonNopadding>
@@ -62,22 +58,19 @@ export const AuthenticatedApp = () => {
           </Routes>
         </Router>
       </Main>
-      <ProjectModal
-        projectModalOpen={projectModalOpen}
-        onClose={() => setProjectModalOpen(false)}
-      ></ProjectModal>
+      <ProjectModal></ProjectModal>
     </Container>
   );
 };
 
-const PageHeader = (props: { projectButton: JSX.Element }) => {
+const PageHeader = () => {
   return (
     <Header between={true}>
       <HeaderLeft gap={true}>
         <ButtonNopadding type={"link"} onClick={() => resetURL()}>
           <SoftwareLogo width={"15rem"} color={"rgb(38,132,255)"} />
         </ButtonNopadding>
-        <ProjectPopover {...props} />
+        <ProjectPopover />
         <h3>用户</h3>
       </HeaderLeft>
       <HeaderRight>

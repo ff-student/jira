@@ -6,7 +6,9 @@ import { Button, Typography } from "antd";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/user";
 import { useProjectsSearchParams } from "./util";
-import { Row } from "components/lib";
+import { ButtonNopadding, Row } from "components/lib";
+import { useDispatch } from "react-redux";
+import { projectListActions } from "./project-list,slice";
 
 export const ProjectListScreen = (props: { projectButton: JSX.Element }) => {
   useDocumentTitle("项目列表", false);
@@ -14,12 +16,16 @@ export const ProjectListScreen = (props: { projectButton: JSX.Element }) => {
   const debonced = useDebounce(param, 200);
   const { isLoading, error, data: list, retry } = useProjects(debonced);
   const { data: users } = useUsers();
-
+  const dispatch = useDispatch();
   return (
     <Container>
       <Row between={true}>
         <H1>项目列表</H1>
-        {props.projectButton}
+        <ButtonNopadding
+          onClick={() => dispatch(projectListActions.openProjectModalOpen())}
+        >
+          创建项目
+        </ButtonNopadding>
       </Row>
       <SearchPannel param={param} setParam={setParam} users={users || []} />
       {error ? <Typography.Text>error.message</Typography.Text> : null}
